@@ -9,6 +9,7 @@ const config = {
 	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
 	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 }
+
 class Firebase {
 	constructor() {
 		app.initializeApp(config)
@@ -16,13 +17,13 @@ class Firebase {
 		this.auth = app.auth()
 	}
 
-	doCreateUserWithEmailAndPassword = (email, password) => {
-		this.auth.createUserWithEmailAndPassword(email, password)
-	}
+	// *** Auth API ***
 
-	doSignInWithEmailAndPassword = (email, password) => {
+	doCreateUserWithEmailAndPassword = (email, password) =>
+		this.auth.createUserWithEmailAndPassword(email, password)
+
+	doSignInWithEmailAndPassword = (email, password) =>
 		this.auth.signInWithEmailAndPassword(email, password)
-	}
 
 	doSignOut = () => this.auth.signOut()
 
@@ -30,4 +31,5 @@ class Firebase {
 
 	doPasswordUpdate = password => this.auth.currentUser.updatePassword(password)
 }
+
 export default Firebase
