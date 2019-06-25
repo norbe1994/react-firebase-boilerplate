@@ -6,4 +6,4 @@ const Account = () => (
 	</div>
 )
 
-export default Acccount
+export default Account
