@@ -30,8 +30,13 @@ const withAuthentication = Component => {
 							cliente: { email },
 						})
 						.then(response => {
+							if (response.data.codigoRespuesta === 9002) {
+								this.setState({ user: null })
+								this.props.firebase.doSignOut()
+								return
+							}
+
 							const user = response.data.data[0]
-							console.log(user)
 							user ? this.setState({ user }) : this.setState({ user: null })
 						})
 				} else {
