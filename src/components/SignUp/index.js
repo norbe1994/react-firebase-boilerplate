@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 
-import { withFirebase } from '../Firebase'
+import { withFirebase, FirebaseContext } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
 
 const SignUpPage = () => (
@@ -35,6 +35,7 @@ class SignUpFormBase extends Component {
 			.then(authUser => {
 				this.setState({ ...INITIAL_STATE })
 				this.props.history.push(ROUTES.HOME)
+				this.props.history.push(ROUTES.HOME);
 			})
 			.catch(error => {
 				this.setState({ error })
