@@ -1,16 +1,6 @@
 import React from 'react'
 import AuthUserContext from './context'
 import { withFirebase } from '../Firebase'
-import axios from 'axios'
-
-const appDev = axios.create({
-	baseURL: 'https://appdev.clau.io/pos/v1',
-	headers: {
-		apikey: 'POS-NNKZecND4tThKCuUWG3FZ6yP7TTV6ZemV6eDjBXsbXGA',
-		'Content-Type': 'application/json',
-		origen: 'POS-Nombre',
-	},
-})
 
 const withAuthentication = Component => {
 	class WithAuthentication extends React.Component {
@@ -22,28 +12,11 @@ const withAuthentication = Component => {
 		}
 
 		componentDidMount() {
-			this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-				if (authUser) {
-					const { email } = authUser
-					appDev
-						.post('/consultar_usuario', {
-							cliente: { email },
-						})
-						.then(response => {
-							if (response.data.codigoRespuesta === 9002) {
-								this.setState({ user: null })
-								this.props.firebase.doSignOut()
-								return
-							}
-
-							const user = response.data.data[0]
-							user ? this.setState({ user }) : this.setState({ user: null })
-						})
-				} else {
-					this.setState({ user: null })
-				}
+			this.listener = this.props.firebase.auth.onAuthStateChanged(user => {
+				user ? this.setState({ user }) : this.setState({ user: null })
 			})
 		}
+		S
 
 		componentWillUnmount() {
 			this.listener()
